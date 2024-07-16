@@ -91,6 +91,7 @@ public class PrintEx {
 		System.out.println();
 		System.out.printf("%6s/%f", name, height); // ㅁㅁㅁ홍길동/212.500000
 
+		
 		// 문자열 6칸 왼쪽 정렬 : %-6s
 		System.out.println();
 		System.out.printf("%-6s/%f", name, height); // 홍길동ㅁㅁㅁ/212.500000
@@ -100,7 +101,6 @@ public class PrintEx {
 		// -> 둘째 자리에서 반올림
 		double num = 1.25;
 		System.out.println();
-		System.out.printf("%s/%.1f", name, num); // 홍길동/1.3							
-		
+		System.out.printf("%s/%.1f", name, num); // 홍길동/1.3					
 	}
 }
