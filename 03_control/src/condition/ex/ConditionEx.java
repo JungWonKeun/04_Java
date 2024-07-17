@@ -2,7 +2,7 @@ package condition.ex;
 
 import java.util.Scanner;
 
-/*
+/**
  * 조건문 예시 기능용 클래스
  */
 public class ConditionEx {
@@ -12,7 +12,7 @@ public class ConditionEx {
 	
 	
 	
-	
+
 	/**
 	 * 1 ~ 10 사이 난수가 짝수인지 홀수인지 출력
 	 */
@@ -20,24 +20,24 @@ public class ConditionEx {
 		
 		int ran = (int)(Math.random() * 10 + 1);
 		
-		if(ran% 2 != 1) {
+		if(ran % 2 != 1) {
 			System.out.println("짝수 입니다.");
 		} else {
 			System.out.println("홀수 입니다.");
-		}		
+		}
 	}
-
+	
 	
 	/**
 	 * 나이를 입력 받아
 	 * 13세 이하 : 어린이
 	 * 14세 이상 19세 이하 : 청소년
-	 * 20세 이상 : 성인
+	 * 20세 이상 : 성인 
 	 * 
 	 * 구분하여 출력하기
 	 */
 	public void method2() {
-
+		
 		System.out.print("나이 입력 : ");
 		int age = sc.nextInt(); // 필드 sc 이용
 		
@@ -61,37 +61,37 @@ public class ConditionEx {
 	 * 나이를 입력 받아
 	 * 13세 이하 : 어린이
 	 * 14세 이상 19세 이하 : 청소년
-	 * 	- 14~16 : 청소년(중)
+	 *  - 14~16 : 청소년(중)
 	 *  - 17~19 : 청소년(고)
-	 * 20세 이상 : 성인	 * 
+	 * 20세 이상 : 성인 
 	 * 0 이하 또는 100 초과 : 잘못 입력하셨습니다
 	 * 
 	 * 구분하여 출력하기
 	 */
 	public void method3() {
-
-		System.out.print("나이 입력 : ");
-		int age = sc.nextInt();
 		
-		String result;		
-		if(age <=0 || age > 100) result="잘못 입력하셨습니다";				
-		else if(age <= 13) result = "어린이";			
-		else if(age <= 19) result = (age < 17 ) ? "청소년(중)" : "청소년(고)";			
-		else result = "성인";		
+		System.out.print("나이 입력 : ");
+		int age = sc.nextInt(); // 필드 sc 이용
+		
+		String result;
+		if(age <= 0 || age > 100)  	result = "잘못 입력하셨습니다";
+		else if(age <= 13)	result = "어린이";
+		else if(age <= 19)  result = "청소년" + ((age<=16) ? "(중)" : "(고)");
+		else result = "성인";
 		
 		System.out.println(result);
 	}
 	
-		
-	/** [switch 를 이용한 메서드 호출) 
+	
+	/** [switch 를 이용한 메서드 호출]
 	 */
 	public void displayMenu() {
 		
 		System.out.println("1. method1() - 난수 홀짝");
 		System.out.println("2. method2() - 나이 구분1");
 		System.out.println("3. method3() - 나이 구분2");
-		System.out.println("4. method4() - 계절찾기");
-		System.out.println("5. method5() - 성적");		
+		System.out.println("4. method4() - 계절 찾기");
+		System.out.println("5. method5() - 성적 판별기");
 		
 		System.out.print("번호 선택 >> ");
 		int num = sc.nextInt();
@@ -99,13 +99,13 @@ public class ConditionEx {
 		System.out.println("----------------------------------------");
 		
 		switch(num) {
-		case 1 : method1(); break; // 1 입력 시 method1() 호출		
-		case 2 : method2(); break;		
+		case 1 : method1(); break; // 1 입력 시 method1() 호출
+		case 2 : method2(); break;
 		case 3 : method3(); break;
 		case 4 : method4(); break;
-		case 5 : method5(); break;		
+		case 5 : method5(); break;
 		
-		default : System.out.println("잘못 입력 하셨습니다");
+		default :  System.out.println("잘못 입력 하셨습니다");
 		}
 		
 	}
@@ -113,7 +113,7 @@ public class ConditionEx {
 	
 	
 	
-	/** [switch]
+	/**[switch]
 	 * 입력된 달(월)의 계절 출력하기
 	 */
 	public void method4() {
@@ -127,23 +127,23 @@ public class ConditionEx {
 		// case를 연속해서 작성하는 여러 방법
 		
 		// 1) 세로로 쭉
-		case 3 : 
-		case 4 : 
-		case 5 : result = "봄"; break;
+		case 3: 
+		case 4: 
+		case 5: result = "봄"; break;
 		
 		// 2) 가로로 쭉
-		case 6 : case 7 : case 8 : result = "여름"; break;
+		case 6: case 7: case 8: result = "여름"; break;
 		
 		// 3) case 값, 값, 값 형식
 		case 9, 10, 11 : result = "가을"; break;
-		
+				
 		case 12, 1, 2 : result = "겨울"; break;
 		
 		default : result = "잘못 입력";
 		
 		} // switch end
 		
-		System.out.println(result);		
+		System.out.println(result);
 	}
 	
 	
@@ -169,13 +169,13 @@ public class ConditionEx {
 	 * 
 	 * 
 	 * [실행 화면]
-	 * 이름               : 홍길동
+	 * 이름 : 홍길동
 	 * 중간고사 점수(40%) : 100
 	 * 기말고사 점수(50%) : 80
-	 * 과제 점수(10%)     : 50
+	 * 과제 점수(10%) : 50
 	 * 
-	 * 최종 점수 : 85점
-	 * 성적 : B+ 
+	 * 홍길동의 최종 점수 : 85.0점
+	 * 성적 : B+
 	 */
 	public void method5() {
 		
@@ -195,7 +195,7 @@ public class ConditionEx {
 		double sum = (midTerm * 0.4) + (finalTerm * 0.5) + (report * 0.1);
 		
 		String result;
-
+		
 		// 방법 4
 		switch( (int)sum/10 ) {
 		case 10, 9 : result = "A"; break;
@@ -250,7 +250,7 @@ public class ConditionEx {
 	case 12 : result = "D"; break;
 	default : result = "F";
 	}
-	*/	
+	*/
 	
 	
 	/** [연습 문제]
@@ -260,7 +260,7 @@ public class ConditionEx {
 	 * 모든 과목 40점 이상, 평균 60점 이상인 경우 PASS
 	 * 
 	 * [출력 예시]
-	 * 
+	 * 점수 입력(국 영 수 사 과) : 100 50 60 70 80
 	 * 
 	 * 
 	 * 1) 40점 미만 과목이 존재하는 경우
@@ -270,53 +270,74 @@ public class ConditionEx {
 	 * 2) 평균 60점 미만인 경우
 	 * FAIL [점수 : 50.4 (평균 미달)]
 	 * 
+	 * 
 	 * 3) PASS인 경우
 	 * PASS [점수 : 83.4 / 100]
 	 */
+	
+	
 	public void practice() {
 		System.out.print("점수 입력(국 영 수 사 과) : ");
-
+		
 		int kor = sc.nextInt(); // 국
 		int eng = sc.nextInt(); // 영
 		int mat = sc.nextInt(); // 수
 		int soc = sc.nextInt(); // 사
  		int sci = sc.nextInt(); // 과
  		
-
-        int sum = kor + eng + mat + soc + sci;
-        double avr = sum / 5.0; // 평균 계산 시 5.0으로 나누어야 합니다.
-
-        String result;
-        StringBuilder failSubjects = new StringBuilder();
-
-        if (kor < 40) failSubjects.append("국어 ");
-        if (eng < 40) failSubjects.append("영어 ");
-        if (mat < 40) failSubjects.append("수학 ");
-        if (soc < 40) failSubjects.append("사회탐구 ");
-        if (sci < 40) failSubjects.append("과학탐구 ");
-
-        if (failSubjects.length() > 0) {
-            result = "FAIL [40점 미만 과목 : " + failSubjects.toString().trim() + "]";
-        } else if (avr < 60) {
-            result = "FAIL [점수 : " + avr + " (평균 미달)]";
-        } else {
-            result = "PASS [점수 : " + avr + " / 100]";
-        }
-
-        System.out.println(result);
-    }
-
-    public static void main(String[] args) {
-        ConditionEx ex = new ConditionEx();
-        ex.practice();
-    
-
-// 		System.out.println(kor);
-// 		System.out.println(eng);
-// 		System.out.println(mat);
-// 		System.out.println(soc);
-// 		System.out.println(sci);
+ 		
+ 		// 40점 미만인 과목 검사
+ 		boolean flag = false; 
+ 		
+ 		String str = ""; // 빈칸(자료형 : String, 내용 X)
+ 		
+ 		if(kor < 40) {
+ 			flag = true;
+ 			str += "국어 ";
+ 		}
+ 		
+ 		if(eng < 40) {
+ 			flag = true;
+ 			str += "영어 ";
+ 		}
+ 		
+ 		if(mat < 40) {
+ 			flag = true;
+ 			str += "수학 ";
+ 		}
+ 		
+ 		if(soc < 40) {
+ 			flag = true;
+ 			str += "사회 ";
+ 		}
+ 		
+ 		if(sci < 40) {
+ 			flag = true;
+ 			str += "과학 ";
+ 		}
+ 		
+ 		
+ 		// 40점 미만 과목이 존재하는 경우
+ 		if(flag) { // str == ""
+ 			System.out.printf("FAIL [40점 미만 과목 : %s]", str);
+ 			return;
+ 		}
+ 		
+ 		
+ 		// 평균(double형 결과를 반환 받기 위해 5.0으로 나눔)
+ 		double avg = (kor + eng + mat + soc + sci) / 5.0;
+ 		
+ 		if(avg < 60.0) {
+ 			System.out.printf("FAIL [점수 : %.1f (평균 미달)]", avg);
+ 			return; //  Early return; (중간에 메서드를 종료)
+ 		}
+ 		
+ 		System.out.printf("PASS [점수 : %.1f / 100]", avg);
 	}
+	
+	
+	
+	
 	
 	
 	
