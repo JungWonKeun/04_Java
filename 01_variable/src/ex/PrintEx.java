@@ -30,7 +30,7 @@ public class PrintEx {
 		 *   console.log( `나는 ${name}입니다` );
 		 *   
 		 *   [Java]
-		 *   String name = "홍길동";		 *   
+		 *   String name = "홍길동";		    
 		 *   System.out.printf("나는 %s 입니다", name);
 		 * 
 		 * 	 %d : 정수 (byte, short, int)

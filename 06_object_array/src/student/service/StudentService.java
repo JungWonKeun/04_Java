@@ -10,9 +10,9 @@ public class StudentService {
 	// StudentDTO 객체를 참조하는
 	// StudentDTO 참조 변수 5개 묶음 배열 생성
 	// 인덱스 : 0 ~ 4
-	// 각 인덱스 요소 : 초기 값 null
-	
+	// 각 인덱스 요소 : 초기 값 null	
 	private StudentDTO[] students = new StudentDTO[5];
+	
 	
 	/* 기본 생성자*/
 	public StudentService() {
@@ -65,14 +65,15 @@ public class StudentService {
 		// 순서대로 비어있는 (null) 요소를 찾아
 		// 전달 받은 std를 대입
 
+		
+		
 		for(int i = 0 ; i < students.length ; i++) {
 			
 			if(students[i] == null) { // 비어있는 경우
 				students[i] = std;
 				return true;
 			}
-		}
-		
+		}		
 		
 		// 비어있는(null) 요소가 없을 경우 false 반환
 		return false;		
@@ -128,6 +129,82 @@ public class StudentService {
 		
 		return null;
 	}
+
+		
+	/**
+	 * 전달 받은 index가 students 범위 내인지 
+	 *  + 정상 범위라면 해당 index가 학생 객체를 참조하는지 확인 
+	 * @param index
+	 * @return 1 또는 2 또는 3(정상)
+	 */
+	public int checkIndex(int index) {
+		// 입력 받은 index가 정상인지 판별
+		// 1 == 범위 초과
+		// 2 == 학생 없음
+		// 3 == 정상		
+		if(index < 0 || index >= students.length) return 1;		
+		
+		if(students[index] == null) return 2;		
+		
+		return 3;		
+	}
+
+	
+	/**
+	 * 전달 받은 index 번째 학생의 점수 수정
+	 * @param index
+	 * @param scores
+	 */	
+	public void updateScores(int index, StudentDTO other) {
+		
+		// 객체 배열 : 객체 참조형 변수를 묶음으로 다룸
+		
+		
+		// students[index] 번째에 저장된 주소 얕은 복사
+		StudentDTO s = students[index];
+		
+		s.setHtml( other.getHtml() );
+		s.setCss ( other.getCss()  );
+		s.setJs  ( other.getJs()   );
+		s.setJava( other.getJava() );
+			
+//		return; // 안써도 컴파일러가 자동으로 추가
+	}
+
+
+	/**
+	 * 평균 최대/최소 구하기
+	 * @return
+	   최고점 : 짱구 (85.4)
+	   최저점 : 맹구 (61.5)
+	 */
+	public String selectMaxMin() {
+		double maxAvg = 0;
+		double minAvg = 100;
+		String maxStudent = null;
+		String minStudent = null;
+
+	    for (StudentDTO student : students) {
+	        if (student == null) continue;
+
+	        double avg = (student.getHtml() + student.getCss() + student.getJs() + student.getJava()) / 4.0;
+
+	        if (avg > maxAvg) {
+	            maxAvg = avg;
+	            maxStudent = student.getName();
+	        }
+
+	        if (avg < minAvg) {
+	            minAvg = avg;
+	            minStudent = student.getName();
+	        }
+	    }
+
+	    String result = String.format("최고점 : %s(%.1f)\n최저점 : %s(%.1f)\n", maxStudent, maxAvg, minStudent, minAvg);
+	    return result;
+	}
+	
+
 	
 	
 	
