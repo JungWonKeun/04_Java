@@ -25,5 +25,12 @@ public class Child extends Parent {
 	}
 	
 	
+	// Parent toString() 오버라이딩 하기
+	@Override
+	public String toString() {
+		return "Child : " + getLastName() + " / " 
+						  + getMoney()    + " / "
+						  + car;
+	}
 	
 }
