@@ -46,12 +46,12 @@ public class BookView {
 			case 3: selectTitle(); break;
 			case 4: selectWriter(); break;
 			case 5: selectPrice(); break;
-			
 			case 6: addBook();  break;
-			
 			case 7: removeBook(); break;
 			
-			case 8: break;
+			case 8: updateBook(); break;
+			
+			
 			case 0: System.out.println("***** 프로그램 종료 *****"); break;
 			default: System.out.println("=-=-= 잘못 입력 =-=-=");
 			}
@@ -94,7 +94,7 @@ public class BookView {
 		
 		// 전달한 index번째 요소가 존재하면 BookDTO 객체 주소
 		// 없다면 null(참조하는 객체가 없음) 반환
-		BookDTO book = service.selectIndex(index);
+		BookDTO book = service.seletIndex(index);
 		
 		if(book == null) {
 			System.out.println("=-=-= 해당 인덱스에 책이 존재하지 않습니다 =-=-=");
@@ -217,35 +217,77 @@ public class BookView {
 	}
 	
 	/**
-	 * 인덱스 번호를 입력 받아
+	 * 인덱스 번호를 입력 받아 
 	 * 
-	 * 1) 일치하는 인덱스가 있으면 bookList에서 제거 후 
+	 * 1) 일치하는 인덱스가 있으면 bookList에서 제거 후
 	 * "[책제목] 책이 목록에서 제거 되었습니다" 출력
 	 * 
 	 * 2) 일치하는 인덱스가 없으면
 	 * "해당 인덱스에 존재하는 책이 없습니다" 출력
-	 * 
+	 *  
 	 */
 	private void removeBook() {
 		System.out.println("\n@@@@@ 책 제거하기 @@@@@\n");
 
-        System.out.print("제거할 책의  인덱스입력 : ");
-        int index = sc.nextInt();
-        
-        String result = service.removeBook(index);
-        
-        if(result == null) {
-        	System.out.println("=-=-= 해당 인덱스에 존재하는 책이 없습니다 =-=-=");
-        	return;
-        }
-        
-        System.out.printf("[%s] 책이 목록에서 제거 되었습니다 \n",
-        					result);        
-        
-    }
+		System.out.print("제거할 책 인덱스 입력 : ");
+		int index =  sc.nextInt();
+		
+		String result = service.removeBook(index);
+		
+		if(result == null) {
+			System.out.println("=-=-= 해당 인덱스에 존재하는 책이 없습니다 =-=-=");
+			return;
+		}
+		
+		System.out.printf("[%s] 책이 목록에서 제거 되었습니다 \n",
+							result);
+		
+	}
 	
 	
 	
-	
+	/**
+	 * index 번호를 입력 받아
+	 * 해당 index에 책이 존재하지 않으면
+	 * -> "해당 인덱스에 책이 존재하지 않습니다" 출력 후 메서드 종료
+	 * 
+	 * 해당 index에 책이 존재하면
+	 * -> 수정할 가격을 입력 후 수정
+	 * -> "[책제목] 가격이 (이전 가격) -> (새 가격) 수정 되었습니다"
+	 *    형식으로 출력 
+	 */
+	private void updateBook() {
+		System.out.println("\n@@@@@ 책 가격 수정하기 @@@@@@\n");
+
+		System.out.print("수정할 책의 인덱스 입력 : ");
+		int index = sc.nextInt();
+		
+		// 인덱스가 일치하는 요소의 BookDTO(참조 주소)를 반환 받기
+		
+		// ex) index가 0인 경우
+		// BookServie의 bookList.get(0) 에 저장된 주소와
+		// 아래 book에 저장된 주소가 "같음"
+		BookDTO book = service.seletIndex(index);
+		
+		if(book == null) {
+			System.out.println("해당 인덱스에 책이 존재하지 않습니다");
+			return;
+		}
+		
+		// 책이 존재하면 가격 입력 받기
+		System.out.print("수정할 가격 입력 : ");
+		int newPrice = sc.nextInt();
+		
+		// 수정 전 가격을 임시 변수에 저장
+		int beforePrice = book.getPrice();
+		
+		// book이 참조하는 BookDTO의 가격을 newPrice로 수정
+		book.setPrice(newPrice);
+		
+		// 결과 출력
+		System.out.printf("[%s] 가격이 (%d) -> (%d) 수정 되었습니다 \n",
+							book.getTitle(), beforePrice, newPrice);
+		
+	}
 	
 }

@@ -44,7 +44,7 @@ public class BookService {
 	 * @param index
 	 * @return BookDTO 또는 null
 	 */
-	public BookDTO selectIndex(int index) {
+	public BookDTO seletIndex(int index) {
 		
 		// index 범위가 bookList의 인덱스 범위 밖인 경우
 		if( index < 0 || index >= bookList.size() )  return null;
@@ -127,36 +127,32 @@ public class BookService {
 		return bookList.add(newBook);
 	}
 	
-
 	
 	/**
 	 * 전달 받은 index요소 제거하기
 	 * @param index
 	 * @return null : index 범위가 맞지 않음
-	 *         제목 : index가 정상 범위
+	 * 		   제목 : index가 정상 범위
 	 */
 	public String removeBook(int index) {
+		
 		// 1) index가 bookList 범위 내 인덱스가 맞는지 확인
-		if(index < 0 || index >= bookList.size()) { // 범위 밖		
+		if(index < 0 || index >= bookList.size()) { // 범위 밖
 			return null;
 		}
 		
 		// 2) 정상 범위인 경우 index번째 요소를 제거한 후
-		//    "제거된 책 제목"을 반환
+		//  "제거된 책 제목"을 반환
 		
-		// bookList.remove(index) -> 제거된 책 (BookDTO) 반환
+		// bookList.remove(index) -> 제거된 책(BookDTO) 반환
 		
-		// bookList.remove(index).getTitle();
+		// bookList.remove(index).getTitle()
 		// -> 제거된 책의 제목 얻어오기
 		
 		// * method chaining : 메서드의 결과(반환값)를 이용해
-		// 					   또 다른 메서드를 호출
-		return bookList.remove(index).getTitle();		
+		//					   또 다른 메서드를 호출
+		return bookList.remove(index).getTitle();
 	}
-	
-	
-	
-	
 	
 	
 	
