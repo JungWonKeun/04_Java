@@ -144,7 +144,7 @@ public class WrapperService {
 		
 		// 다른 언어(특히 HTML, JS)에서 전달된 값이 있을 경우
 		// 보통 String 형태로 전달되어져서 오는 경우가 많다!!
-		// 이를 Java에서 ㅣ본 자료형으로 변환하는 경우 사용!
+		// 이를 Java에서 기본 자료형으로 변환하는 경우 사용!
 		// 단, char(Character)는 존재하지 않음
 		
 		/* WrapperClass.parse 자료형("문자열")
