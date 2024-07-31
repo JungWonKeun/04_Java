@@ -87,7 +87,7 @@ public class TryCatchService {
 			 *   콘솔에 출력하는 메서드
 			 *   --> 원래 예외 발생하면 나타나는 구문
 			 */
-			e.printStackTrace();
+			//e.printStackTrace();
 			
 			
 			/* String e.getMessage(); 
