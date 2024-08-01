@@ -1,0 +1,7 @@
+일단 프로젝트를 만들어
+run service view dao dto 순으로 클래스를 만들어보자
+그 중 service와 dao는 인터페이스로 만든다음
+상속 클래스도 만든 다음
+상속 클래스명 다음에 (implements 상속받을 클래스명) 추가
+
+run 클래스에서 실행 시킬 코드 작성(import까지 하자)
