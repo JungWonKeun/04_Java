@@ -7,7 +7,7 @@ public class MemberRun {
 		
 		MemberView view = new MemberView();
 		
-		
+	
 		
 	
 	}
