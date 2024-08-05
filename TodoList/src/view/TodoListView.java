@@ -3,122 +3,193 @@ package view;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
+import java.util.List;
+import dto.Todo;
 import service.TodoListService;
 import service.TodoListServiceImpl;
 
-public  class TodoListView {
-	
+public class TodoListView {
 
-		private TodoListService service = null;
-		private BufferedReader br = null;
-		
-		// 기본 생성자
-		public TodoListView() {
-			
-			try {
-				// 객체 생성 중 발생한 예외를 View에 모아서 처리
-				service = new TodoListServiceImpl();
-				
-				// 키보드를 입력 받기 위한 스트림 생성
-				br = new BufferedReader(new InputStreamReader(System.in));   
-			
-			}catch (Exception e) {
-			
-				System.out.println("*** 프로그램 실행 중 오류 발생 ***");
-				e.printStackTrace(); 
-				System.exit(0); // 프로그램 종료
-			}
-		}
-		
-		
-		public void mainMenu() {
-			
-			int input = 0;
-			do {
-				
-				try {
-					// 메뉴 출력 후 입력된 번호를 반환 받기
-					input = selectMenu();					
-					
-					// 선택된 메뉴 번호에 따라 case 선택
-					switch(input) {
-					case 1: fullView(); break;
-					case 2:  break;
-					case 3:  break;
-					case 4:  break;
-					case 5:  break;
-					case 6:  break;
-					
-					case 0: System.out.println("*** 프로그램 종료 ***"); break;
-					default : System.out.println("### 메뉴에 작성된 번호만 입력 해주세요 ###");
-					}
-					
-					System.out.println("=====================================");
-					
-					
-				} catch(NumberFormatException e) {
-					System.out.println("\n### 숫자만 입력 해주세요 ###\n");
-					input = -1; // 첫 반복에서 종료되지 않게 값 변경
-				
-				} catch(IOException e) {
-					System.out.println("\n### 입출력 관련 예외 발생 ###\n");
-					e.printStackTrace(); // 예외 추적
-				
-				} catch(Exception e) { // 나머지 예외 처리
-					e.printStackTrace();
-				}
-				
-				
-			}while(input != 0);
-			
-			
-		}
-		
+    private TodoListService service;
+    private BufferedReader br;
 
+    public TodoListView() {
+        try {
+            service = new TodoListServiceImpl();
+            br = new BufferedReader(new InputStreamReader(System.in));
+        } catch (Exception e) {
+            System.out.println("*** 프로그램 실행 중 오류 발생 ***");
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
 
-		private int selectMenu() throws NumberFormatException, IOException {
-			
-			System.out.println("\n====== Todo List =====\n");
-			
-			System.out.println("1. Todo List Full View");
-			System.out.println("2. Todo Detail View");
-			System.out.println("3. Todo Add");
-			System.out.println("4. Todo Complete");
-			System.out.println("5. Todo Update");
-			System.out.println("6. Todo Delete");
-			System.out.println("0. EXIT");
-			
-			System.out.print("select menu number >>> ");
-			
-			// 입력 받은 문자열을 int 형태로 변환
-			int input = Integer.parseInt( br.readLine() );
-			System.out.println(); // 줄바꿈
-			
-			return input;
-		}
-		
+    public void mainMenu() throws IOException {
+        while (true) {
+            System.out.println("\n====== Todo List =====");
+            System.out.println("1. Todo List Full View");
+            System.out.println("2. Todo Detail View");
+            System.out.println("3. Todo Add");
+            System.out.println("4. Todo Complete");
+            System.out.println("5. Todo Update");
+            System.out.println("6. Todo Delete");
+            System.out.println("0. EXIT");
+            System.out.print("select menu number >>> ");
+            
+            int menu = Integer.parseInt(br.readLine());
 
-		
-		private void fullView() {
-			System.out.println("===============[1. Todo List Full View]===============");
-		}
-		
+            switch (menu) {
+                case 1: todoListFullView(); break;
+                case 2: detailView(); break;
+                case 3: addTodo(); break;
+                case 4: completeTodo(); break;
+                case 5: updateTodo(); break;
+                case 6: deleteTodo(); break;
+                case 0:
+                    System.out.println("\n@@@ 프로그램 종료 @@@\n");
+                    return;
+                default:
+                    System.out.println("### 메뉴에 작성된 번호만 입력해 주세요 ###");
+            }
+            System.out.println("=====================================================================");
+        }
+    }
+
+    private void todoListFullView() {
+        System.out.println("\n===============[1. Todo List Full View]===============\n");
+
+        List<Todo> todoList = service.getTodoList();
+        
+        // 완료된 Todo의 개수를 직접 세기
+        int completedCount = 0;
+        for (Todo todo : todoList) {
+            if (todo.isCompleted()) {
+                completedCount++;
+            }
+        }
+
+        System.out.printf("[ 완료된 Todo 개수 / 전체 Todo 수 : %d / %d ]\n", 
+        			completedCount, todoList.size());
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("인덱스        등록일                완료여부     할 일 제목");
+        System.out.println("--------------------------------------------------------------------");
+
+        for (int i = 0; i < todoList.size(); i++) {
+            Todo todo = todoList.get(i);
+            String completionStatus = todo.isCompleted() ? "(O)" : "(X)";
+            System.out.printf("[%3d]   %s    %10s       %4s\n",
+                    i, todo.getFormattedDate(), completionStatus, todo.getTitle());
+        }
+        System.out.println("=====================================================================\n");
+    }
 
 
+    private void detailView() throws IOException {
+        System.out.println("\n===============[2. Todo Detail View]===============\n");
+        System.out.print("인덱스 번호 입력 : ");
+        int index = Integer.parseInt(br.readLine());
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+        Todo todo = service.getTodoByIndex(index); 
+
+        if (todo != null) {
+            System.out.println("--------------------------------------------");
+            System.out.println("제목 : " + todo.getTitle());
+            System.out.println("등록일 : " + todo.getFormattedDate());
+            System.out.println("완료여부 : " + (todo.isCompleted() ? "O" : "X"));
+            System.out.println("\n[세부 내용]");
+            System.out.println("--------------------------------------------");
+            System.out.println(todo.getDetail());
+        } else {
+            System.out.println("### 입력한 인덱스 번호에 할 일(Todo)가 존재하지 않습니다 ###");
+        }
+        System.out.println("=====================================================================\n");
+    }
+
+    private void addTodo() throws IOException {
+        System.out.print("할 일 제목 입력 : ");
+        String title = br.readLine();
+
+        System.out.println("세부 내용 작성 (입력 종료 시 !wq 작성 후 엔터)");
+        StringBuilder detail = new StringBuilder(); 
+        String line;
+
+        while (!(line = br.readLine()).equals("!wq")) {
+            detail.append(line).append("\n");
+        }
+
+        int index = service.addTodoList(title, detail.toString());
+
+        System.out.printf("[ %d ] 인덱스에 추가되었습니다.\n", index);
+    }
+
+    private void completeTodo() throws IOException {
+        System.out.println("\n===============[4. Todo Complete]===============\n");
+        System.out.print("O <-> X 변경할 인덱스 번호 입력 : ");
+        int index = Integer.parseInt(br.readLine());
+
+        boolean isCompleted = service.completeTodoByIndex(index); 
+
+        if (isCompleted) {
+            System.out.println("완료 여부가 변경되었습니다.");
+        } else {
+            System.out.println("잘못된 인덱스 번호입니다.");
+        }
+    }
+
+    private void updateTodo() throws IOException {
+        System.out.println("\n===============[5. Todo Update]===============\n");
+        System.out.print("수정할 To do 인덱스 번호 입력 : ");
+        int index = Integer.parseInt(br.readLine());
+
+        Todo todo = service.getTodoByIndex(index);  
+
+        if (todo != null) {
+            System.out.println("@@@@@@@@@@@[수정 전]@@@@@@@@@@@@@@@");
+            System.out.println("--------------------------------------------");
+            System.out.println("제목 : " + todo.getTitle());
+            System.out.println("등록일 : " + todo.getFormattedDate());
+            System.out.println("완료여부 : " + (todo.isCompleted() ? "O" : "X"));
+            System.out.println("\n[세부 내용]");
+            System.out.println("--------------------------------------------");
+            System.out.println(todo.getDetail());
+            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+
+            System.out.print("수정할 제목 : ");
+            String newTitle = br.readLine();
+
+            System.out.println("수정할 세부 내용 작성 (입력 종료 시 !wq 작성 후 엔터)");
+            StringBuilder newDetail = new StringBuilder();  
+            String line;
+
+            while (!(line = br.readLine()).equals("!wq")) {
+                newDetail.append(line).append("\n");
+            }
+
+            boolean Update = service.updateTodoByIndex(index, newTitle, newDetail.toString());
+
+            if (Update) {
+                System.out.println("Todo가 수정되었습니다.");
+            } else {
+                System.out.println("Todo 수정 중 오류 발생");
+            }
+        } else {
+            System.out.println("### 입력한 인덱스에 Todo가 존재하지 않습니다 ###");
+        }
+    }
+
+    private void deleteTodo() throws IOException {
+        System.out.println("\n===============[6. Todo Delete]===============\n");
+        System.out.print("삭제할 인덱스 번호 입력 : ");
+        int index = Integer.parseInt(br.readLine());
+
+        boolean remove = service.deleteTodoByIndex(index);
+
+        if (remove) {
+            System.out.println("[삭제 되었습니다]");
+        } else {
+            System.out.println("잘못된 인덱스 번호입니다.");
+        }
+        System.out.println("=====================================================================\n");
+    }
+
 }
