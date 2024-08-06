@@ -102,7 +102,6 @@ public class TodoListView {
         } else {
             System.out.println("### 입력한 인덱스 번호에 할 일(Todo)가 존재하지 않습니다 ###");
         }
-        System.out.println("=====================================================================\n");
     }
 
     private void addTodo() throws IOException {
@@ -110,6 +109,7 @@ public class TodoListView {
         String title = br.readLine();
 
         System.out.println("세부 내용 작성 (입력 종료 시 !wq 작성 후 엔터)");
+        System.out.println("--------------------------------------------");
         StringBuilder detail = new StringBuilder(); 
         String line;
 
@@ -118,7 +118,7 @@ public class TodoListView {
         }
 
         int index = service.addTodoList(title, detail.toString());
-
+        System.out.println("--------------------------------------------");
         System.out.printf("[ %d ] 인덱스에 추가되었습니다.\n", index);
     }
 
@@ -130,7 +130,7 @@ public class TodoListView {
         boolean isCompleted = service.completeTodoByIndex(index); 
 
         if (isCompleted) {
-            System.out.println("완료 여부가 변경되었습니다.");
+            System.out.println("[변경되었습니다]");
         } else {
             System.out.println("잘못된 인덱스 번호입니다.");
         }
@@ -168,7 +168,7 @@ public class TodoListView {
             boolean Update = service.updateTodoByIndex(index, newTitle, newDetail.toString());
 
             if (Update) {
-                System.out.println("Todo가 수정되었습니다.");
+                System.out.println("[수정 되었습니다]");
             } else {
                 System.out.println("Todo 수정 중 오류 발생");
             }
@@ -189,7 +189,6 @@ public class TodoListView {
         } else {
             System.out.println("잘못된 인덱스 번호입니다.");
         }
-        System.out.println("=====================================================================\n");
     }
 
 }

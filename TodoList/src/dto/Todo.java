@@ -2,6 +2,7 @@ package dto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -21,9 +22,9 @@ import lombok.ToString;
 public class Todo implements Serializable { 
 
 	 private String title;  
-	    private String detail;
-	    private boolean complete;
-	    private LocalDateTime regDate;
+	 private String detail;
+	 private boolean complete;
+	 private LocalDateTime regDate;
 
 	    public Todo(String title, String detail) {
 	        this.title = title;
@@ -32,40 +33,20 @@ public class Todo implements Serializable {
 	        this.regDate = LocalDateTime.now();
 	    }
 
-	    public String getTitle() {
-	        return title;
-	    }
-
-	    public void setTitle(String title) {
-	        this.title = title;
-	    }
-
-	    public String getDetail() {
-	        return detail;
-	    }
-
-	    public void setDetail(String detail) {
-	        this.detail = detail;
-	    }
-
 	    public boolean isCompleted() {
 	        return complete;
-	    }
-
-	    public void setComplete(boolean complete) {
-	        this.complete = complete;
 	    }
 
 	    public LocalDateTime getRegDate() {
 	        return regDate;
 	    }
 
+	   
+
 	    public String getFormattedDate() {
-	        return String.format("%4d-%2d-%2d %2d:%2d:%2d",
-	                regDate.getYear(), regDate.getMonthValue(), regDate.getDayOfMonth(),
-	                regDate.getHour(), regDate.getMinute(), regDate.getSecond());
+	    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	    	return regDate.format(formatter);
 	    }
-	
 	
 	// java.time 패키지
 	// LocalDateTime : 날짜, 시간을 나타내는 클래스
